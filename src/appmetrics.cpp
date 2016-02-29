@@ -314,11 +314,17 @@ Listener* listener;
 
 static void freePayload(MessageData* payload) {
 
+	/* Clear fields to guard against the same payload being freed twice. */
+	if( NULL == payload ) {
+		return;
+	}
 	if( NULL != payload->data ) {
 		free(payload->data);
+		payload->data = NULL;
 	}
 	if( NULL != payload->source ) {
 		delete payload->source;
+		payload->source = NULL;
 	}
 	delete payload;
 }
@@ -327,6 +333,8 @@ static void cleanupData(uv_handle_t *handle) {
 
 	if( NULL != handle ) {
 		MessageData* payload = static_cast<MessageData*>(handle->data);
+		/* Guard against being called twice. */
+		handle->data = NULL;
 		freePayload(payload);
 	}
 	delete handle;
