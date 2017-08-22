@@ -23,7 +23,7 @@
 #include "uv.h"
 #include "ibmras/monitoring/AgentExtensions.h"
 #include "plugins/node/prof/watchdog.h"
-//#include "headlessutils.h"
+#include "headlessutils.h"
 
 #if NODE_VERSION_AT_LEAST(0, 11, 0) // > v0.11+
 #include "objecttracker.hpp"
@@ -552,7 +552,7 @@ NAN_METHOD(sendControlCommand) {
     return;
 
 }
-/*
+
 NAN_METHOD(setHeadlessZipFunction) {
     if (!info[0]->IsFunction()) {
         return Nan::ThrowError("First argument must be a function");
@@ -560,7 +560,7 @@ NAN_METHOD(setHeadlessZipFunction) {
     Nan::Callback *callback = new Nan::Callback(info[0].As<Function>());
     headless::setZipFunction(callback);
 }
-*/
+
 NAN_METHOD(localConnect) {
     if (!isMonitorApiValid()) {
         Nan::ThrowError(asciiString("Monitoring API is not initialized").c_str());
@@ -697,11 +697,11 @@ static bool isGlobalAgentAlreadyLoaded(Local<Object> module) {
     }
     return false;
 }
-/*
+
 void zip(const char* outputDir) {
 	headless::zip(outputDir);
 }
-*/
+
 void init(Local<Object> exports, Local<Object> module) {
     /*
      * Throw an error if appmetrics has already been loaded globally
