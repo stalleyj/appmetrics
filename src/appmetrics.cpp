@@ -385,7 +385,8 @@ NAN_METHOD(start) {
 
         loaderApi->start();
 
-	//headless::start();
+        std::cout << "JS  appmetrics.cpp: - about to call headless start" << std::endl;
+	    headless::start();
     }
     if (!initMonitorApi()) {
         loaderApi->logMessage(warning, "Failed to initialize monitoring API");
@@ -400,7 +401,7 @@ NAN_METHOD(stop) {
         running = false;
         loaderApi->stop();
         loaderApi->shutdown();
-	//headless::stop();
+	    headless::stop();
     }
 
 }
@@ -408,7 +409,7 @@ NAN_METHOD(stop) {
 NAN_METHOD(spath) {
 
     Local<String> value = info[0]->ToString();
-std::cout << "appmetrics.cpp:sPath() - setting plugin path to = " << toStdString(value) << std::endl;
+    std::cout << "appmetrics.cpp:sPath() - setting plugin path to = " << toStdString(value) << std::endl;
     loaderApi->setProperty("com.ibm.diagnostics.healthcenter.plugin.path", toStdString(value).c_str());
 
 
@@ -767,7 +768,7 @@ void init(Local<Object> exports, Local<Object> module) {
     exports->Set(Nan::New<String>(asciiString("localConnect")).ToLocalChecked(), Nan::New<FunctionTemplate>(localConnect)->GetFunction());
     exports->Set(Nan::New<String>(asciiString("nativeEmit")).ToLocalChecked(), Nan::New<FunctionTemplate>(nativeEmit)->GetFunction());
     exports->Set(Nan::New<String>(asciiString("sendControlCommand")).ToLocalChecked(), Nan::New<FunctionTemplate>(sendControlCommand)->GetFunction());
-//    exports->Set(Nan::New<String>(asciiString("setHeadlessZipFunction")).ToLocalChecked(), Nan::New<FunctionTemplate>(setHeadlessZipFunction)->GetFunction());
+    exports->Set(Nan::New<String>(asciiString("setHeadlessZipFunction")).ToLocalChecked(), Nan::New<FunctionTemplate>(setHeadlessZipFunction)->GetFunction());
 #if defined(_LINUX)
     exports->Set(Nan::New<String>("lrtime").ToLocalChecked(), Nan::New<FunctionTemplate>(lrtime)->GetFunction());
 #endif
