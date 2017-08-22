@@ -1,5 +1,5 @@
 
 [submodule "omr-agentcore"]
 	path = omr-agentcore
-	url = https://github.com/mattcolegate/omr-agentcore.git
-	branch = zOS
+	url = https://github.com/stalleyj/omr-agentcore.git
+	branch = zOS2
