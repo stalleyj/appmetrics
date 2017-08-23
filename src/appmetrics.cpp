@@ -23,7 +23,7 @@
 #include "uv.h"
 #include "ibmras/monitoring/AgentExtensions.h"
 #include "plugins/node/prof/watchdog.h"
-#include "headlessutils.h"
+//#include "headlessutils.h"
 
 #if NODE_VERSION_AT_LEAST(0, 11, 0) // > v0.11+
 #include "objecttracker.hpp"
@@ -365,8 +365,7 @@ NAN_METHOD(start) {
 
         loaderApi->start();
 
-        std::cout << "JS  appmetrics.cpp: - about to call headless start" << std::endl;
-	    headless::start();
+	    //headless::start();
     }
     if (!initMonitorApi()) {
         loaderApi->logMessage(warning, "Failed to initialize monitoring API");
@@ -381,7 +380,7 @@ NAN_METHOD(stop) {
         running = false;
         loaderApi->stop();
         loaderApi->shutdown();
-	    headless::stop();
+	    //headless::stop();
     }
 
 }
@@ -389,9 +388,11 @@ NAN_METHOD(stop) {
 NAN_METHOD(spath) {
 
     Local<String> value = info[0]->ToString();
+<<<<<<< HEAD
     std::cout << "appmetrics.cpp:sPath() - setting plugin path to = " << toStdString(value) << std::endl;
+=======
+>>>>>>> 684344e179f8c4e6364396f04748786c22887240
     loaderApi->setProperty("com.ibm.diagnostics.healthcenter.plugin.path", toStdString(value).c_str());
-
 
 }
 
@@ -439,7 +440,7 @@ static void emitMessage(uv_async_t *handle, int status) {
         Local<Value> argv[argc];
         const char * source = (*currentMessage->source).c_str();
 
-        Local<Object> buffer = Nan::CopyBuffer((char*)currentMessage->data, currentMessage->size).ToLocalChecked();
+        Local<Object> buffer = Nan::CopyBuffer(asciiString(std::string((char*)currentMessage->data)).c_str(), currentMessage->size).ToLocalChecked();
         argv[0] = Nan::New<String>(source).ToLocalChecked();
         argv[1] = buffer;
 
@@ -456,6 +457,7 @@ static void emitMessage(uv_async_t *handle, int status) {
 
 //static void sendData(const std::string &sourceId, unsigned int size, void *data) {
 static void sendData(const char* sourceId, unsigned int size, void *data) {
+    std::cout << "appmetrics.cpp:sendData() - entry for " << sourceId << std::endl;
     if( size == 0 ) {
         return;
     }
@@ -552,7 +554,7 @@ NAN_METHOD(sendControlCommand) {
     return;
 
 }
-
+/*
 NAN_METHOD(setHeadlessZipFunction) {
     if (!info[0]->IsFunction()) {
         return Nan::ThrowError("First argument must be a function");
@@ -560,7 +562,7 @@ NAN_METHOD(setHeadlessZipFunction) {
     Nan::Callback *callback = new Nan::Callback(info[0].As<Function>());
     headless::setZipFunction(callback);
 }
-
+*/
 NAN_METHOD(localConnect) {
     if (!isMonitorApiValid()) {
         Nan::ThrowError(asciiString("Monitoring API is not initialized").c_str());
@@ -697,11 +699,11 @@ static bool isGlobalAgentAlreadyLoaded(Local<Object> module) {
     }
     return false;
 }
-
+/*
 void zip(const char* outputDir) {
 	headless::zip(outputDir);
 }
-
+*/
 void init(Local<Object> exports, Local<Object> module) {
     /*
      * Throw an error if appmetrics has already been loaded globally
@@ -729,7 +731,7 @@ void init(Local<Object> exports, Local<Object> module) {
     exports->Set(Nan::New<String>(asciiString("localConnect")).ToLocalChecked(), Nan::New<FunctionTemplate>(localConnect)->GetFunction());
     exports->Set(Nan::New<String>(asciiString("nativeEmit")).ToLocalChecked(), Nan::New<FunctionTemplate>(nativeEmit)->GetFunction());
     exports->Set(Nan::New<String>(asciiString("sendControlCommand")).ToLocalChecked(), Nan::New<FunctionTemplate>(sendControlCommand)->GetFunction());
-    exports->Set(Nan::New<String>(asciiString("setHeadlessZipFunction")).ToLocalChecked(), Nan::New<FunctionTemplate>(setHeadlessZipFunction)->GetFunction());
+//    exports->Set(Nan::New<String>(asciiString("setHeadlessZipFunction")).ToLocalChecked(), Nan::New<FunctionTemplate>(setHeadlessZipFunction)->GetFunction());
 #if defined(_LINUX)
     exports->Set(Nan::New<String>("lrtime").ToLocalChecked(), Nan::New<FunctionTemplate>(lrtime)->GetFunction());
 #endif
