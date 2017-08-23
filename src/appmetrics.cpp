@@ -388,10 +388,6 @@ NAN_METHOD(stop) {
 NAN_METHOD(spath) {
 
     Local<String> value = info[0]->ToString();
-<<<<<<< HEAD
-    std::cout << "appmetrics.cpp:sPath() - setting plugin path to = " << toStdString(value) << std::endl;
-=======
->>>>>>> 684344e179f8c4e6364396f04748786c22887240
     loaderApi->setProperty("com.ibm.diagnostics.healthcenter.plugin.path", toStdString(value).c_str());
 
 }
