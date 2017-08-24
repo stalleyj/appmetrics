@@ -510,6 +510,7 @@ extern "C" {
 	NODEPROFPLUGIN_DECL void ibmras_monitoring_receiveMessage(const char *id, uint32 size, void *data) {
 		std::string idstring(id);
 
+        std::cout << "JS nodeprofplugin receiveMessage idstring=" ,, idstring << std::endl;
 		if (idstring == "profiling_node") {
 			//std::stringstream ss;
 			//ss << "Received message with id [" << idstring << "], size [" << size << "]";
@@ -523,9 +524,12 @@ extern "C" {
 			std::size_t found = message.find(',');
 			std::string command = message.substr(0, found);
 			std::string rest = message.substr(found + 1);
+
+            std::cout << "JS nodeprofplugin receiveMessage rest=" << rest << std::endl;
 			
 			if (rest == "profiling_node_subsystem") {
 				bool enabled = (command == "on");
+                std::cout << "JS nodeprofplugin  receiveMessage turn on profiling" << std::endl;
 				//std::string msg = "Setting [" + rest + "] to " + (enabled ? "enabled" : "disabled");
 				//plugin::api.logMessage(debug, msg.c_str());
 				setEnabled(enabled);
