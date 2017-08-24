@@ -510,7 +510,7 @@ extern "C" {
 	NODEPROFPLUGIN_DECL void ibmras_monitoring_receiveMessage(const char *id, uint32 size, void *data) {
 		std::string idstring(id);
 
-        std::cout << "JS nodeprofplugin receiveMessage idstring=" ,, idstring << std::endl;
+        std::cout << "JS nodeprofplugin receiveMessage idstring=" << idstring << std::endl;
 		if (idstring == "profiling_node") {
 			//std::stringstream ss;
 			//ss << "Received message with id [" << idstring << "], size [" << size << "]";
