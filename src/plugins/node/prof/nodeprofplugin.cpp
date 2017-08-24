@@ -248,6 +248,7 @@ void collectData() {
 	// Check if we just got disabled and the profiler
 	// isn't running
 
+    std::cout << "JS nodeprofplugin  collectData" << std::endl;
 	if (!plugin::enabled)
 		return;
 
@@ -267,6 +268,7 @@ void collectData() {
 			data.size = static_cast<uint32>(strlen(serialisedProfile));
 			data.data = serialisedProfile;
 
+            std::cout << "JS nodeprofplugin  collectData about to agentPushData" << std::endl;
 			plugin::api.agentPushData(&data);
 
 
