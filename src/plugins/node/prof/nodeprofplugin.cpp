@@ -521,6 +521,8 @@ extern "C" {
 			//	std::string msg = "Message content [" + message + "]";
 			//	plugin::api.logMessage(debug, msg.c_str());
 			//}
+            std::cout << "JS nodeprofplugin message=" << message << std::endl;
+
 			std::size_t found = message.find(',');
 			std::string command = message.substr(0, found);
 			std::string rest = message.substr(found + 1);
@@ -552,6 +554,8 @@ extern "C" {
 					threshold = 0;
 				}
                 setWatchdogThreshold(threshold);
+            } else {
+                   std::cout << "JS nodeprofplugin receiveMessage DIDNT UNDERSTAND" << std::endl;
             }
 		}
 	}
