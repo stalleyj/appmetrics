@@ -541,7 +541,7 @@ NAN_METHOD(sendControlCommand) {
         String::Utf8Value commandArg(info[1]->ToString());
         std::string topic = std::string(*topicArg);
         std::string command = std::string(*commandArg);
-        std::asciiCommand = asciiString(command);
+        std::string asciiCommand = asciiString(command);
         unsigned int length = asciiCommand.length();
         monitorApi::sendControl(topic.c_str(), length, (void*)asciiCommand.c_str());
     } else {
