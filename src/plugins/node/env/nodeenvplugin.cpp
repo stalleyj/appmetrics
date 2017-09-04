@@ -32,6 +32,10 @@
 #include <string>
 #include <sstream>
 
+#if defined(_ZOS)
+#include <unistd.h>
+#endif
+
 #define DEFAULT_CAPACITY 1024
 
 #if defined(_WINDOWS)

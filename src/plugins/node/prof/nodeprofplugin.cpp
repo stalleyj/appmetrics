@@ -516,7 +516,7 @@ extern "C" {
 			//ss << "Received message with id [" << idstring << "], size [" << size << "]";
 			//plugin::api.logMessage(debug, ss.str().c_str());
 			
-			std::string message((const char*) data, size);
+          	std::string message((const char*) data, size);
 			//if (size > 0) {
 			//	std::string msg = "Message content [" + message + "]";
 			//	plugin::api.logMessage(debug, msg.c_str());
