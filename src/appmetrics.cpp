@@ -541,9 +541,9 @@ NAN_METHOD(sendControlCommand) {
         String::Utf8Value commandArg(info[1]->ToString());
         std::string topic = std::string(*topicArg);
         std::string command = std::string(*commandArg);
-        std::string asciiCommand = asciiString(command);
+ //       std::string asciiCommand = asciiString(command);
         unsigned int length = asciiCommand.length();
-        monitorApi::sendControl(topic.c_str(), length, (void*)asciiCommand.c_str());
+        monitorApi::sendControl(topic.c_str(), length, (void*)command.c_str());
     } else {
         return Nan::ThrowError(asciiString("Arguments must be strings containing the plugin name and control command").c_str());
     }
